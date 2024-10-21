@@ -55,6 +55,7 @@ form {
     border:none;
     color: white;
     border-radius: 25px;
+    transition: transform 0.3s ease;
 
 }
 .submit:hover {
@@ -66,6 +67,7 @@ form {
     border:none;
     color: white;
     border-radius: 25px;
+    transform: translateY(-5px);
     
 
 }
@@ -105,7 +107,6 @@ label[for="size"], .mode {
 .buttons {
     margin-bottom: 20px; 
     display: flex;
-    
     justify-content: center;
     gap: 35px; 
 }
@@ -133,6 +134,11 @@ label[for="size"], .mode {
     border: none;
     border-radius: 5px;
     font-size: 18px;
+    transition: transform 0.3s ease;
+}
+
+.reset:hover, .darkening:hover, .random:hover {
+    transform: translateY(-5px);
 }
 
 .reset {
@@ -152,6 +158,7 @@ label[for="size"], .mode {
     background: linear-gradient(135deg, rgb(255, 0, 102), rgb(255, 204, 0), rgb(51, 102, 255));
     color: white;
     box-shadow: 5px 5px 3px #2323ff;
+    
 }
 
 
@@ -170,10 +177,19 @@ input[type="color"] {
     border-radius: 50%;
     box-shadow: 5px 5px 5px black;
     padding: 10px;
+    transition: transform 0.3s ease; 
+}
+
+input[type="color"]:hover {
+    transform: translateY(-5px)
 }
 
 footer {
     margin: 100px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
 }
 
@@ -181,16 +197,38 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: transform 0.3s ease; 
 }
 
-i {
-    
-    height: 100px;
-    width: 100px;
-    
-    
-    font-size: 50px;
-    text-align: center;
-    margin: auto;
+.fa-linkedin {
     color: blue;
 }
+.fa-envelope {
+    color:white;
+}
+
+i{  
+    height: 100px;
+    width: 100px;
+    font-size: 50px;
+    text-align: center;
+    margin: 10px 30px;
+    
+
+}
+
+i:hover {
+    transform: translateY(-5px);
+
+}
+
+.fa-copyright {
+    font-size: 20px;
+    margin: 0;
+    padding: 0;
+}
+
+.year {
+    display: inline;
+}
+
