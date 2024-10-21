@@ -1,28 +1,29 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+html, body {
+    height: auto;
+    min-height: 100%;
+}
+
 body {
-    height: 100vh;
-    
-    background-color: #f0f0f0;
-}
-
-.container {
-    margin: 150px auto;
-    border: 5px solid blue;
-    width: 800px;
-    height: 800px;
+    background: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
     display: flex;
-    flex-wrap: wrap;
-}
-
-.container div {
-    flex-basis: calc(100% / 16 ); 
-    height: calc(100% / 16 );
-    background-color: offwhite;  
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    font-family: "Kanit", sans-serif;
+    line-height: 1.2rem
+    
 }
 
 form {
@@ -30,54 +31,166 @@ form {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
+    margin-bottom: 20px;
 }
-
 
 .radio-container, .button-container {
     display: flex;
-    
 }
 
 .radio-container label {
-    font-size: 18px;
+    font-size: 28px;
     font-weight: bold;
     padding: 10px;
     margin-right: 10px;
+    
 }
 
-
-.submit{
-    padding: 5px 15px;
+.submit {
+    margin-top: 10px;
+    padding: 15px 25px;
     font-size: 14px;  
+    background-color: blue;
+    box-shadow: 5px 5px 5px blue;
+    border:none;
+    color: white;
+    border-radius: 25px;
+
+}
+.submit:hover {
+    margin-top: 10px;
+    padding: 15px 25px;
+    font-size: 14px;  
+    background-color: black;
+    box-shadow: 5px 5px 5px black;
+    border:none;
+    color: white;
+    border-radius: 25px;
+    
+
+}
+
+label[for="size"], .mode {
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 28px;
+    
 }
 
 
-label[for="size"] {
-    margin-bottom: 10px;
-}
+
 
 #size {
     outline: none;
-    padding: 5px 15px;
-    width: 300px;
-    margin-bottom: 10px;
+    padding: 15px 15px;
+    width: 400px;
+    margin-bottom: 20px;
     border: none;
     border-bottom: 2px solid blue;
     box-shadow: 5px 5px 1px blue;
 }
-
+#size::placeholder {
+    color: blue;
+    font-family: "Kanit", sans-serif;
+    font-size: 15px;
+    line-height: 1.2rem;
+}
 #size:focus {
     border-top-left-radius: 5px;
     border-bottom-right-radius: 5px;
     border-bottom: 2px solid blue;
-    border: 2px solid blue; /
+    border: 2px solid blue;
+}
+
+.buttons {
+    margin-bottom: 20px; 
+    display: flex;
+    
+    justify-content: center;
+    gap: 35px; 
+}
+
+.container {
+    border: 5px solid black;
+    box-shadow: 5px 5px 1px  black;
+    border-radius: 5px;
+    width: 800px;
+    height: 800px;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: white; 
+}
+
+.container div {
+    flex-basis: calc(100% / 16); 
+    height: calc(100% / 16);
+    background-color: offwhite;
+}
+
+
+.reset, .darkening, .random {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
 }
 
 .reset {
-    margin: -150px auto;
+    background-color: black;
+    color: yellow;
+    box-shadow: 5px 5px 3px yellow;
+
 }
 
-.canvas {
-    border: 2px solid red;
+.darkening {
+    background: linear-gradient(135deg, #4e4e50, #0d0d0d);
+    color: white;
+    box-shadow: 5px 5px 3px #4e4e50;
+}
+
+.random {
+    background: linear-gradient(135deg, rgb(255, 0, 102), rgb(255, 204, 0), rgb(51, 102, 255));
+    color: white;
+    box-shadow: 5px 5px 3px #2323ff;
+}
+
+
+span {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+input[type="color"] {
+    margin: 0 20px;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    box-shadow: 5px 5px 5px black;
+    padding: 10px;
+}
+
+footer {
+    margin: 100px auto;
+
+}
+
+.icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+i {
+    
+    height: 100px;
+    width: 100px;
+    
+    
+    font-size: 50px;
+    text-align: center;
+    margin: auto;
+    color: blue;
 }

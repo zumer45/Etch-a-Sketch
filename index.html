@@ -6,14 +6,15 @@
     <title>Document</title>
     <link rel="stylesheet" href="styles.css">
     <script src="script.js" defer></script>
+    <script src="https://kit.fontawesome.com/950e66d591.js" crossorigin="anonymous" defer></script>
 </head>
 <body>
     
     
     <form >
         <label for="size">What Size Of Grid Would You like? The valid range is 1 to 100</label>
-        <input type="text" name="size" id="size" placeholder="Enter The Size In Range 1 to 100">
-        <p>What Mode Would You want to be in Hover or Click</p>
+        <input type="text" name="size" id="size" placeholder="Enter The Size In Range 1 to 100.">
+        <p class="mode">What Mode Would You want to be in Hover or Click?</p>
         <div class="radio-container">
             <input type="radio" name="choice" id="Hover" value="hover">
             <label for="Hover">Hover</label>
@@ -22,11 +23,24 @@
         </div>
         <button class="submit">Submit</button>
     </form>
+        <div class="buttons">
+            <button class="reset">Reset</button>
+            <button class="darkening">Darkening</button>
+            <button class="random">Random Colors</button>
+            <span>Change Color<input type="color"></span>
+        </div>
 
-        <button class="reset">Reset Canvas</button>
         <div class="container">
         
         </div>
+        <footer>
+            <div class="icons">
+                <i class="fa-brands fa-linkedin"></i>
+                <i class="fa-brands fa-github"></i>
+                <i class="fa-solid fa-envelope"></i>
 
+            </div>
+            <p>All content <i class="fa-solid fa-copyright"> <span class="year"></span></i> Zaine Umer | Fullstack Web Developer</p>
+        </footer>
 </body>
 </html>
