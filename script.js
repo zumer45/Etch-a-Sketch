@@ -1,115 +1,128 @@
-const container = document.querySelector(".container");
-let currentColor = "black";
+const constants = {
+    container: document.querySelector('.container'),
+    currentColor: "black",
+    defaultGridSize: 16,
+    get boxes() {
+        return document.querySelectorAll('.box'); // Dynamically get boxes after creation
+    },
+    width: document.querySelector('.container').offsetWidth,
+    colorPicker: document.querySelector('input[type="color"]'),
+    resetBtn: document.querySelector('.reset'),
+    form: document.querySelector('form'),
+    currentMode: 'click',
+    darkeningBtn : document.querySelector('.darkening')
+};
 
-
-function createDivs() {
-    for (let i = 0; i < 256; i++) { // 16 x 16 = 256 divs
-        let div = document.createElement('div');
-        div.className = "box";
-        container.appendChild(div);
+function createDivs(number = 16) {
+    const container = constants.container;
+    container.innerHTML = '';
+    const boxSize = 100 / number;
+    if (number >= 1 && number <= 100) {
+        for (let i = 0; i < number * number; i++) { 
+            let div = document.createElement('div');
+            div.className = "box";
+            div.style.cssText = `
+                flex-basis: ${boxSize}%; 
+                height: ${boxSize}%;
+                background-color: offwhite;
+            `;
+            container.appendChild(div);
+        }
+    } else {
+        alert("The valid range is 1 to 100")
     }
 }
 
-function colorChangeOnHover() {
-    let boxes = container.querySelectorAll('.box');
-    boxes.forEach((box) => {
-        box.addEventListener('mouseover', () => {
-            box.style.cssText = `background-color: ${currentColor};`;
+function handleColorChange(color = 'black') {
+    const colorPicker = constants.colorPicker;
+
+    function updateColor(event) {
+        color = colorPicker.value;
+    }
+
+    colorPicker.addEventListener('input', updateColor);
+}
+
+function addEventListeners() {
+    const boxes = constants.boxes;
+
+    boxes.forEach(box => {
+        box.addEventListener('mouseover', (event) => {
+            if (constants.currentMode === 'hover') {
+                event.target.style.backgroundColor = constants.colorPicker.value;
+            }
+        });
+
+        box.addEventListener('click', (event) => {
+            if (constants.currentMode === 'click') {
+                event.target.style.backgroundColor = constants.colorPicker.value;
+            }
         });
     });
 }
 
-function performReset() {
-    let boxes = container.querySelectorAll('.box');
-    boxes.forEach((box) => {
-        box.style.cssText = "background-color: white;";
-    });
-    currentColor = "black"; 
-}
+function getFormData(callback) {
+    const form = constants.form;
 
-
-
-function resetBoxes() {
-    const resetBtn = document.querySelector('.reset');
-    resetBtn.addEventListener('click', (e) => {
-        performReset()
-    });
-}
-
-function changeColor() {
-    const colorPicker = document.querySelector('input[type="color"]');
-    colorPicker.addEventListener('input', (event) => {
-        currentColor = event.target.value;
-    });
-}
-
-
-function getFormData(callBack) {
-    const form = document.querySelector('form')
-    
     form.addEventListener('submit', (event) => {
-        event.preventDefault()
+        event.preventDefault();
 
+        const formData = new FormData(form);
+        let size = formData.get('size');
+        let choice = formData.get('choice');
 
-        const formData = new FormData(form)
         
-         let size = formData.get("size")
-         let choice = formData.get("choice")
-        
-         console.log(size, choice);
-        if (callBack) {
-            callBack(x,y)
+
+        constants.currentMode = choice; // Update mode
+
+        if (typeof callback === 'function') {
+            callback(size, choice);
         }
-       
+
+        form.reset();
+    });
+}
+
+function handleFormData(size, choice) {
+    constants.choice = choice;
+    createDivs(parseInt(size));
+    addEventListeners(); 
+}
+
+
+function resetBtn() {
+    const resetBtn = constants.resetBtn;
+    const colorPicker = constants.colorPicker
+
+    resetBtn.addEventListener('click', ()=> {
+        const boxes = constants.boxes
+
+        boxes.forEach((box) => {
+            box.style.backgroundColor = 'white';
+        
+    })
+    colorPicker.value = 'black'
     })
 }
 
-
-
-
-function darkenBoxes() {
-    const colors = [
-        "#FAFAFA",
-        "#F0F0F0",
-        "#D9D9D9",
-        "#BFBFBF",
-        "#808080",
-        "#404040",
-        "#1A1A1A",
-        "#000000"
-    ];
-
-    const darkeningBtn = document.querySelector('.darkening');
+function darkening() {
+    const darkeningBtn = constants.darkeningBtn;
 
     darkeningBtn.addEventListener('click', () => {
-        alert("DARKENING IS ONLY AVAILABLE WITH THE COLOR BLACK. SO YOUR CURRENT STYLES WILL BE RESET");
-        let choice = prompt("Would You like to reset the canvas to use the darkening feature? \n enter YES or NO")
-        console.log(choice);
+        alert("Darkening Mode will Reset the Canvas. \nDarkening Mode is Only Available in Click Mode. \nEach click will shade the boxes from light to dark.");
+        const userChoice = prompt("Would You Like To Continue? Type Yes or No")
 
-        if (choice && choice.toLowerCase() === "yes") {
-            performReset()
+        if ( userChoice && userChoice.toLowerCase() === 'yes') {
+            resetBtn()
+
         } else {
-            return
+            return;
         }
 
-        // let boxes = doucment.querySelectorAll('.box') 
-
-        // boxes.forEach((box) => {
-        //     box.addEventListener('mouseover', ()=> {
-
-        //     })
-        // })
-        
-    });
+    })
 }
-
-
 createDivs();
-colorChangeOnHover();
-resetBoxes();
-changeColor();
-darkenBoxes();
-getFormData((size, choice) => {
-    x = size
-    y = choice
-})
+handleColorChange();
+getFormData(handleFormData);
+resetBtn()
+darkening()
