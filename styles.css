@@ -32,6 +32,8 @@ form {
     justify-content: center;
     align-items: center;
     margin-bottom: 20px;
+    
+    
 }
 
 .radio-container, .button-container {
@@ -76,6 +78,7 @@ label[for="size"], .mode {
     margin-bottom: 20px;
     font-weight: bold;
     font-size: 28px;
+    
     
 }
 
@@ -190,6 +193,7 @@ footer {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    
 
 }
 
