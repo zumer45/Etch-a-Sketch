@@ -7,15 +7,24 @@ const elements = {
     form: document.querySelector('form'),
     resetBtn: document.querySelector('.reset'),
     darkeningBtn: document.querySelector('.darkening'),
-    random: document.querySelector('.random')
+    randomBtn: document.querySelector('.random')
 };
 
 const appValues = {
     color: 'black',
     defaultMode: 'hover',
     currentMode: null,
-    darken: false
+    darken: false,
+    random: false
 };
+
+function getRandomColor() {
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+    
+    return [r, g, b];
+}
 
 // Function to draw the canvas with the given size
 function drawCanvas(size = 16) {
@@ -56,24 +65,19 @@ function handleColors() {
         e.target.style.backgroundColor = appValues.color || 'black';
     }
 
-    
     function darkenColor(e) {
         let currentOpacity = parseFloat(e.target.style.opacity) || 0.1;
         
         if (currentOpacity < 1) {
-            e.target.style.opacity = Math.min(currentOpacity + 0.1 , 1)
-            e.target.style.backgroundColor = appValues.color || 'black'
+            e.target.style.opacity = Math.min(currentOpacity + 0.1, 1);
+            e.target.style.backgroundColor = appValues.color || 'black';
         }
     }
-    function random(e) {
-        
-        const r = Math.floor(Math.random() * 256)
-        const g = Math.floor(Math.random() * 256)
-        const b = Math.floor(Math.random() * 256)
 
-        e.target.style.backgroundColor = `rgb(${r,g ,b})`
-        
-    
+    function randomColor(e) {
+        const colorsArray = getRandomColor();
+        appValues.color = `rgb(${colorsArray[0]}, ${colorsArray[1]}, ${colorsArray[2]})`;
+        e.target.style.backgroundColor = appValues.color;
     }
 
     // Remove existing event listeners to avoid duplicates
@@ -82,18 +86,21 @@ function handleColors() {
             box.removeEventListener('mouseover', applyColorOnHover);
             box.removeEventListener('click', applyColorOnClick);
             box.removeEventListener('click', darkenColor);
-            box.removeEventListener('click', random)
+            box.removeEventListener('click', randomColor);
         });
     }
 
     removeEvents();
 
-    
     if (appValues.currentMode === 'click') {
-        if (appValues.darken) {
-            
+        if (appValues.random) {
             boxes.forEach((box) => {
-                box.addEventListener('click', darkenColor); // Apply darkening effect on click
+                box.addEventListener('click', randomColor);
+            });
+        }
+        if (appValues.darken) {
+            boxes.forEach((box) => {
+                box.addEventListener('click', darkenColor);
             });
         } else {
             boxes.forEach((box) => {
@@ -124,15 +131,12 @@ function getFormData() {
         const choice = inputChoice || 'hover';
 
         appValues.currentMode = choice;
-
-        console.log(`Form submitted with size: ${size} and mode: ${choice}`);
-
         drawCanvas(size); 
         form.reset();
     }
 }
 
-// Reset function to clear the grid and reset the color picker
+
 function reset() {
     const resetBtn = elements.resetBtn;
     resetBtn.addEventListener('click', () => {
@@ -143,34 +147,25 @@ function reset() {
 function performReset() {
     const boxes = elements.boxes;
     const darkeningBtn = elements.darkeningBtn;
-    const randomBtn = elements.random
+    const randomBtn = elements.randomBtn;
     appValues.currentMode = appValues.defaultMode;
     appValues.color = 'black';
-    elements.colorPickerInput.value = '#000000';
+    appValues.random = false; 
+    appValues.darken = false; 
+    elements.colorPickerInput.value = '#000000'; 
 
-    if (appValues.random) {
-        randomBtn.style.cssText = `
-            
-            border: none;
-            
-            
-        `;
-    }
+    
+    darkeningBtn.style.cssText = `border: none;`;
+    randomBtn.style.cssText = `border: none;`;
 
-    if (appValues.darken) {
-        appValues.darken = false;
-        darkeningBtn.style.cssText = `
-            
-            border: none;
-            
-            
-        `;
-    }
-
+    // Reset all box colors to white
     boxes.forEach((box) => {
-        box.style.backgroundColor = 'white'; 
+        box.style.backgroundColor = 'white';
+        box.style.opacity = 1; // Reset opacity in case darken mode was used
     });
-    drawCanvas()
+
+    
+    drawCanvas();
     console.log('Grid reset to default white color and mode reset to hover');
 }
 
@@ -187,24 +182,20 @@ function darkening() {
 
         if (formattedMessage === 'yes' || formattedMessage === 'y') {
             performReset();
-            if (true) {
-                appValues.currentMode = 'click';
-                appValues.darken = true;
-                e.target.style.cssText = 'border: 2px solid yellow;';
-                drawCanvas()
-            }
-           
+            appValues.currentMode = 'click';
+            appValues.darken = true;
+            e.target.style.cssText = 'border: 2px solid yellow;';
+            drawCanvas();
         } else {
             appValues.darken = false;
-            appValues.currentMode = appValues.defaultMode
+            appValues.currentMode = appValues.defaultMode;
             alert("Darkening mode canceled.");
-            return;
         }
     });
 }
 
 function random() {
-    const randomBtn = elements.random
+    const randomBtn = elements.randomBtn;
 
     randomBtn.addEventListener('click', (e) => {
         const message = 'Random Mode will reset the canvas. \nIt is only available in Click Mode.\nEach click will be a random color.';
@@ -215,27 +206,17 @@ function random() {
         const formattedMessage = promptMessage ? promptMessage.toLowerCase() : '';
 
         if (formattedMessage === 'yes' || formattedMessage === 'y') {
-            performReset()
-            if (true) {
-                appValues.currentMode = 'click';
-                appValues.random = true;
-                e.target.style.cssText =  
-                `
-                    
-                    box-shadow: 5px 5px 1px white;
-                     
-                    ;
-                
-                `
-            } else {
-                appValues.random = false;
-                alert("Darkening mode canceled.");
-                return;
-            }
+            performReset();
+            appValues.currentMode = 'click';
+            appValues.random = true;
+            e.target.style.cssText = 'box-shadow: 5px 5px 1px white;';
+            drawCanvas();
+        } else {
+            appValues.random = false;
+            appValues.currentMode = appValues.defaultMode;
+            alert("Random Colors mode canceled.");
         }
-
-    })
-
+    });
 }
 
 // Initialize the application
@@ -245,7 +226,8 @@ function init() {
     getFormData();
     reset();
     darkening();
-    random()
+    getRandomColor();
+    random();
 }
 
 // Initialize everything on DOMContentLoaded

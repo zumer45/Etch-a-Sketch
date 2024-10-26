@@ -189,21 +189,18 @@ input[type="color"]:hover {
 
 footer {
     margin: 100px auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     
-
 }
 
-.icons {
+.icons  {
     display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
-    transition: transform 0.3s ease; 
 }
-
+.fa-github {
+    color: black;
+}
 .fa-linkedin {
     color: blue;
 }
@@ -217,8 +214,6 @@ i{
     font-size: 50px;
     text-align: center;
     margin: 10px 30px;
-    
-
 }
 
 i:hover {
@@ -238,4 +233,64 @@ i:hover {
 
 .copyright {
     font-size: 20px;
+}
+
+
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    form {
+        margin-bottom: 15px;
+    }
+
+    .radio-container label {
+        font-size: 20px;
+    }
+
+    .submit {
+        padding: 10px 20px;
+        font-size: 12px;
+    }
+
+    #size {
+        width: 100%;
+        padding: 10px 10px;
+        margin-bottom: 15px;
+    }
+
+    .buttons {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .container {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1;
+        border: 3px solid black;
+    }
+
+    .reset, .darkening, .random {
+        padding: 8px 15px;
+        font-size: 16px;
+    }
+
+    input[type="color"] {
+        height: 40px;
+        width: 40px;
+        padding: 8px;
+    }
+
+    footer {
+        margin: 50px auto;
+    }
+
+    i {
+        height: 60px;
+        width: 60px;
+        font-size: 40px;
+        margin: 10px 20px;
+    }
 }
